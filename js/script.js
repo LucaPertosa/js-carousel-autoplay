@@ -78,6 +78,9 @@ prevBtn.addEventListener("click", function() {
 // Scrivo qui la parte della funzione auto-swap:
 function autoSwap() {
     if (activeItemIndex < (itemsArray.length - 1)) {
+        // // nascondo il prevBtn
+        // prevBtn.classList.add("hidden");
+
         // rimuovo lo stato active dalla array-item
         itemsArray[activeItemIndex].classList.remove("active");
 
@@ -87,9 +90,21 @@ function autoSwap() {
         // rimetto lo stato active dalla array-item
         itemsArray[activeItemIndex].classList.add("active");
         
+        // riattivo il .prevBtn
+        prevBtn.classList.remove("hidden");
+
         // All'ultimo array-item rimuovo il bottone next
         if (activeItemIndex === itemsArray.length - 1) {
             nextBtn.classList.add("hidden");
-        };
+        }
+    } else {
+        // se siamo all'ultima posizione dell'array ripartiamo dal primo elemento
+        itemsArray[activeItemIndex].classList.remove("active");
+        activeItemIndex = 0;
+        itemsArray[activeItemIndex].classList.add("active");
+
+        // ripristino bottoni all situazione iniziale
+        prevBtn.classList.add("hidden");
+        nextBtn.classList.remove("hidden")
     };
 }
