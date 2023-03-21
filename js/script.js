@@ -26,14 +26,28 @@ console.log(itemsArray);
 // Assegno alla posizione 0 dell'array la classe active creata su css
 let activeItemIndex = 0;
 itemsArray[activeItemIndex].classList.add("active");
-setInterval(autoSwap, 3000)
+// Richiamo funzione da ripetere all'infinito
+
+let autoSwapConst = setInterval(autoSwap, 3000);
+console.log(autoSwapConst);
+
 // GESTIONE BOTTONI NEXT PREV
 // Creeo variabile buttons
 const prevBtn = document.querySelector(".prev");
 const nextBtn = document.querySelector(".next");
 
+// Nascondo il prevBtn di default 
+prevBtn.classList.add("hidden")
+
 // gestisco click next
 nextBtn.addEventListener("click", function() {
+    // al click si disattiva la funzione di swap di immagini
+    clearInterval(autoSwapConst);
+    // si ferma e riparte dopo ogni click
+    stopAutoSwap();
+
+    startAutoSwap();
+
     // al click si riattiva il bottone per tornare indietro
     prevBtn.classList.remove("hidden");
 
@@ -54,10 +68,14 @@ nextBtn.addEventListener("click", function() {
     };
 });
 
-// Nascondo il prevBtn di default 
-prevBtn.classList.add("hidden")
 // gestisco il click prev
 prevBtn.addEventListener("click", function() {
+    // al click si disattiva la funzione di swap di immagini
+    clearInterval(autoSwapConst);
+    // si ferma e riparte dopo ogni click
+    stopAutoSwap();
+
+    startAutoSwap();
     nextBtn.classList.remove("hidden")
 
     // rimuovo lo stato active dalla array-item
@@ -78,8 +96,6 @@ prevBtn.addEventListener("click", function() {
 // Scrivo qui la parte della funzione auto-swap:
 function autoSwap() {
     if (activeItemIndex < (itemsArray.length - 1)) {
-        // // nascondo il prevBtn
-        // prevBtn.classList.add("hidden");
 
         // rimuovo lo stato active dalla array-item
         itemsArray[activeItemIndex].classList.remove("active");
@@ -107,4 +123,44 @@ function autoSwap() {
         prevBtn.classList.add("hidden");
         nextBtn.classList.remove("hidden")
     };
+};
+
+// Start autoswap
+let timer;
+function startAutoSwap() {
+    timer = setInterval(function() {
+        if (activeItemIndex < (itemsArray.length - 1)) {
+
+            // rimuovo lo stato active dalla array-item
+            itemsArray[activeItemIndex].classList.remove("active");
+    
+            // incremento la posizione dell'array
+            activeItemIndex++;
+    
+            // rimetto lo stato active dalla array-item
+            itemsArray[activeItemIndex].classList.add("active");
+            
+            // riattivo il .prevBtn
+            prevBtn.classList.remove("hidden");
+    
+            // All'ultimo array-item rimuovo il bottone next
+            if (activeItemIndex === itemsArray.length - 1) {
+                nextBtn.classList.add("hidden");
+            }
+        } else {
+            // se siamo all'ultima posizione dell'array ripartiamo dal primo elemento
+            itemsArray[activeItemIndex].classList.remove("active");
+            activeItemIndex = 0;
+            itemsArray[activeItemIndex].classList.add("active");
+    
+            // ripristino bottoni all situazione iniziale
+            prevBtn.classList.add("hidden");
+            nextBtn.classList.remove("hidden")
+        };
+    }, 3000)
+}
+
+// Stop auto swap 
+function stopAutoSwap() {
+    clearInterval(timer);
 }
