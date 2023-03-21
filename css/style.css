@@ -1,0 +1,69 @@
+/* RESET */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+img {
+    width: 100%;
+    height: 600px;
+    display: block;
+    object-fit: cover;
+
+}
+
+/* LAYOUT */
+.container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    background-color: yellowgreen;
+}
+
+.slider {
+    width: 50%;
+    min-width: 600px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.item {
+    display: none;
+}
+
+/* BUTTONS */
+.prev,
+.next {
+    position: absolute;
+    transform: translateX(-50%);
+    background-color: rgba(244, 244, 244, 0.4);
+    width: 30px;
+    height: 30px;
+    left: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+    cursor: pointer;
+}
+/* COMMON JS UTILITY */
+.item.active {
+    display: block;
+}
+
+
+.hidden {
+    display: none;
+}
+/* /COMMON JS UTILITY */
+
+.prev {
+    top: 20px;
+}
+
+.next {
+    bottom: 20px;
+}
+/* /BUTTONS */
